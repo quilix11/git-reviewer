@@ -1,6 +1,12 @@
 import sys
 from services.ai_service import analyze_code
 from services.git_utils import git_diff
+from rich.console import Console
+from rich.panel import Panel
+from rich.markdown import Markdown
+from rich.live import Live
+
+console = Console()
 
 
 def main():
