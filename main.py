@@ -31,17 +31,29 @@ def analyze_code(diff_text):
     )
     return response.text
 
-my_diff = git_diff()
+def main():
 
-if not my_diff:
-    print("Немає змін для перевірки")
-else:
-    diff = analyze_code(my_diff)
-    print(diff)
+    my_diff = git_diff()
 
-if "VERDICT: REJECT" in diff:
-    print("Коміт відхилено")
-    sys.exit(1)
-else:
-    print("Код перевірений, комітимо")
-    sys.exit(0)
+    if not my_diff:
+        print("Немає змін для перевірки")
+        sys.exit(0)
+
+        # 3. Якщо зміни є - відправляємо ШІ та друкуємо звіт
+    print("ШІ аналізує код... Зачекайте...")
+    ai_report = analyze_code(my_diff)
+    print("\n--- ЗВІТ ШІ ---")
+    print(ai_report)
+    print("---------------\n")
+
+
+    if "VERDICT: REJECT" in ai_report:
+        print("❌ Коміт заблоковано через помилки або хардкод!")
+        sys.exit(1)
+    else:
+        print("✅ Код перевірено, коміт дозволено!")
+        sys.exit(0)
+
+
+if __name__ == "__main__":
+    main()
