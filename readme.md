@@ -22,7 +22,7 @@ If you prefer to set it up manually:
    ```
  3. Run the installer script with your preferred language as an argument:
    ```bash
-   python install.py Ukrainian
+   python install.py
    
    ```
    *Note: If no language is provided, it defaults to English.*
@@ -30,7 +30,7 @@ If you prefer to set it up manually:
 After installation, ensure you have a .env file inside the .git-reviewer folder with your credentials:
 ```env
 API_KEY=your_google_gemini_api_key
-AI_MODEL=gemini-...
+AI_MODEL=(you Gemini model, example: gemini-2.5-fast
 
 ```
 ## How it Works
