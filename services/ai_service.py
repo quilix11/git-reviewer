@@ -6,7 +6,7 @@ load_dotenv()
 
 
 def analyze_code(diff_text):
-    language = "Ukrainian"
+    language = os.getenv("REVIEW_LANGUAGE", "English")
 
     client = genai.Client(api_key=os.getenv("API_KEY"))
 
@@ -68,6 +68,7 @@ Rules:
 - Be strict but accurate
 - Avoid generic statements
 - Provide specific and actionable feedback
+- DO NOT use any emojis in the report
 
 Classification:
 - CRITICAL: security issues or serious bugs

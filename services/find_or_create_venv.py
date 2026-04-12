@@ -4,6 +4,9 @@ import subprocess
 from pathlib import Path
 
 
+from services.theme import console
+
+
 def find_or_create_venv():
     root = Path.cwd()
     
@@ -14,9 +17,9 @@ def find_or_create_venv():
     for d in root.iterdir():
         if d.is_dir() and d.name not in [".git", "node_modules", ".idea", "__pycache__"]:
             if (d / "pyvenv.cfg").exists():
-                print(f"ℹ Знайдено нестандартне віртуальне середовище: {d.name}")
+                console.print(f"[info]Found non-standard virtual environment: {d.name}[/info]")
                 return d
                 
-    print("⏳ Віртуальне середовище не знайдено. Створюю .venv...")
+    console.print("[info]Virtual environment not found. Creating .venv...[/info]")
     subprocess.run([sys.executable, "-m", "venv", ".venv"])
     return root / ".venv"
