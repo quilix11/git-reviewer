@@ -30,7 +30,7 @@ If you prefer to set it up manually:
 After installation, ensure you have a .env file inside the .git-reviewer folder with your credentials:
 ```env
 API_KEY=your_google_gemini_api_key
-AI_MODEL=gemini-1.5-pro
+AI_MODEL=gemini-...
 
 ```
 ## How it Works
@@ -41,4 +41,3 @@ Once installed, the tool acts as a pre-commit hook. Every time you run git commi
  4. If **WARNINGS** are found, you will be asked to confirm whether you want to proceed.
 ```
 
-```
