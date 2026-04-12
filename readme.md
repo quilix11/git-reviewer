@@ -12,7 +12,7 @@ This script will safely clone the repository, set up a virtual environment, inst
 If you prefer to set it up manually:
  1. Clone the repository into a hidden directory:
    ```bash
-   git clone [https://github.com/quilix11/git-reviewer.git](https://github.com/quilix11/git-reviewer.git) .git-reviewer
+   git clone https://github.com/quilix11/git-reviewer.git
    
    ```
  2. Navigate to the directory:
