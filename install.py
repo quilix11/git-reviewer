@@ -3,10 +3,9 @@ from pathlib import Path
 from services.find_or_create_venv import find_or_create_venv
 from services.install_dependencies import install_dependencies
 
-
 venv_path = find_or_create_venv()
-venv_name = venv_path.name
-install_dependencies(venv_name)
+
+install_dependencies(venv_path)
 
 hooks_path = Path(".git/hooks")
 hook_file = hooks_path / "pre-commit"
@@ -27,14 +26,16 @@ export REVIEW_LANGUAGE="{user_lang}"
 
 REPO_ROOT=$(git rev-parse --show-toplevel)
 
-PYTHON_BIN="$REPO_ROOT/{venv_name}/bin/python"
+PYTHON_BIN="$REPO_ROOT/{venv_path.name}/bin/python"
 MAIN_SCRIPT="$REPO_ROOT/main.py"
 
 # Перевіряємо, чи існує venv, щоб видати нормальну помилку
 if [ ! -f "$PYTHON_BIN" ]; then
-    echo "❌ Помилка: Віртуальне середовище {venv_name} не знайдено у $REPO_ROOT"
+    echo "❌ Помилка: Віртуальне середовище {venv_path.name} не знайдено у $REPO_ROOT"
     exit 1
 fi
+
+exec < /dev/tty
 
 "$PYTHON_BIN" "$MAIN_SCRIPT"
 
