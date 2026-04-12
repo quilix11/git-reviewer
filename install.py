@@ -8,21 +8,20 @@ venv_path = find_or_create_venv()
 
 install_dependencies(venv_path)
 
-hooks_path = Path(".git/hooks")
+current_dir = Path.cwd()
+is_subfolder_install = current_dir.name == ".git-reviewer"
+target_dir = current_dir.parent if is_subfolder_install else current_dir
+
+hooks_path = target_dir / ".git" / "hooks"
 hook_file = hooks_path / "pre-commit"
 
 if not hooks_path.exists():
-    console.print("[error].git/hooks folder not found. Are you sure you're in the root of a Git project?[/error]")
+    console.print(f"[error].git/hooks folder not found in {target_dir}. Are you sure you're in a Git project?[/error]")
     sys.exit(1)
 
-try:
-    user_lang = console.input("[prompt]Enter language for AI responses: [/prompt]").strip()
-except EOFError:
-    user_lang = "English"
+user_lang = sys.argv[1] if len(sys.argv) > 1 else "English"
 
-if not user_lang:
-    user_lang = "English"
-
+rel_tool_path = ".git-reviewer/" if is_subfolder_install else ""
 
 bash_template = f"""#!/bin/bash
 echo "Starting AI Git-Hook Reviewer..."
@@ -31,11 +30,11 @@ export REVIEW_LANGUAGE="{user_lang}"
 
 REPO_ROOT=$(git rev-parse --show-toplevel)
 
-PYTHON_BIN="$REPO_ROOT/{venv_path.name}/bin/python"
-MAIN_SCRIPT="$REPO_ROOT/main.py"
+PYTHON_BIN="$REPO_ROOT/{rel_tool_path}{venv_path.name}/bin/python"
+MAIN_SCRIPT="$REPO_ROOT/{rel_tool_path}main.py"
 
 if [ ! -f "$PYTHON_BIN" ]; then
-    echo "Error: Virtual environment {venv_path.name} not found in $REPO_ROOT"
+    echo "Error: Virtual environment not found at $PYTHON_BIN"
     exit 1
 fi
 
