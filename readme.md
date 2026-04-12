@@ -39,5 +39,4 @@ Once installed, the tool acts as a pre-commit hook. Every time you run git commi
  2. AI analyzes the code for security, logic, and quality issues.
  3. If **CRITICAL** issues are found, the commit is automatically blocked.
  4. If **WARNINGS** are found, you will be asked to confirm whether you want to proceed.
-```
 
