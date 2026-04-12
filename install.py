@@ -1,5 +1,12 @@
 import sys
 from pathlib import Path
+from services.find_or_create_venv import find_or_create_venv
+from services.install_dependencies import install_dependencies
+
+
+venv_path = find_or_create_venv()
+venv_name = venv_path.name
+install_dependencies(venv_name)
 
 hooks_path = Path(".git/hooks")
 hook_file = hooks_path / "pre-commit"
@@ -8,19 +15,24 @@ if not hooks_path.exists():
     print("❌ Папку .git/hooks не знайдено. Ви точно в корені Git-проєкту?")
     sys.exit(1)
 
-bash_template = """#!/bin/bash
+user_lang = input("Введіть мову для відповідей ШІ: ").strip()
+if not user_lang:
+    user_lang = "English"
+
+
+bash_template = f"""#!/bin/bash
 echo "🤖 Запуск AI Git-Hook Reviewer..."
 
-# Git сам знає, де корінь репозиторію
+export REVIEW_LANGUAGE="{user_lang}"
+
 REPO_ROOT=$(git rev-parse --show-toplevel)
 
-# Використовуємо відносні шляхи від кореня
-PYTHON_BIN="$REPO_ROOT/.venv/bin/python"
+PYTHON_BIN="$REPO_ROOT/{venv_name}/bin/python"
 MAIN_SCRIPT="$REPO_ROOT/main.py"
 
 # Перевіряємо, чи існує venv, щоб видати нормальну помилку
 if [ ! -f "$PYTHON_BIN" ]; then
-    echo "❌ Помилка: Віртуальне середовище .venv не знайдено у $REPO_ROOT"
+    echo "❌ Помилка: Віртуальне середовище {venv_name} не знайдено у $REPO_ROOT"
     exit 1
 fi
 

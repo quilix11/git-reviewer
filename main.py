@@ -5,6 +5,7 @@ from rich.panel import Panel
 from rich.markdown import Markdown
 from dotenv import load_dotenv
 from rich.prompt import Confirm
+import json
 
 from services.git_utils import git_diff
 from services.ai_service import analyze_code
