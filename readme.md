@@ -17,7 +17,7 @@ If you prefer to set it up manually:
    ```
  2. Navigate to the directory:
    ```bash
-   cd .git-reviewer
+   cd git-reviewer
    
    ```
  3. Run the installer script with your preferred language as an argument:
