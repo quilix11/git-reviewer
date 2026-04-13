@@ -4,7 +4,7 @@
 Run this command in the root directory of your Git project to install the reviewer automatically:
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/quilix11/git-reviewer/main/install.sh | bash
+curl -sSL https://raw.githubusercontent.com/quilix11/git-reviewer/main/install.sh -o install.sh && bash install.sh && rm install.sh
 
 ```
 This script will safely clone the repository, set up a virtual environment, install dependencies, and activate the pre-commit hook.
