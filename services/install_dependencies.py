@@ -2,11 +2,11 @@ import os
 import subprocess
 import sys
 
-from services.theme import console
+
 
 def install_dependencies(venv_path):
     pip_path = venv_path / "Scripts" / "pip" if os.name == 'nt' else venv_path / "bin" / "pip"
-    console.print("[info]Installing dependencies (rich, google-genai, python-dotenv)...[/info]")
+    print("[info]Installing dependencies (rich, google-genai, python-dotenv)...[/info]")
     
     # Upgrade pip first
     result = subprocess.run(
@@ -17,7 +17,7 @@ def install_dependencies(venv_path):
     )
     
     if result.returncode != 0:
-        console.print(f"[error]Failed to upgrade pip[/error]")
+        print(f"[error]Failed to upgrade pip[/error]")
         sys.exit(1)
     
     # Install required packages
@@ -28,7 +28,7 @@ def install_dependencies(venv_path):
     )
     
     if result.returncode != 0:
-        console.print(f"[error]Failed to install dependencies[/error]")
+        print(f"[error]Failed to install dependencies[/error]")
         sys.exit(1)
     
-    console.print("[success]Dependencies installed successfully![/success]")
+    print("[success]Dependencies installed successfully![/success]")

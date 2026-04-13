@@ -2,11 +2,11 @@ import sys
 from pathlib import Path
 from services.find_or_create_venv import find_or_create_venv
 from services.install_dependencies import install_dependencies
-from services.theme import console
 
 venv_path = find_or_create_venv()
 
 install_dependencies(venv_path)
+
 
 current_dir = Path.cwd()
 is_subfolder_install = current_dir.name == ".git-reviewer"
@@ -16,7 +16,7 @@ hooks_path = target_dir / ".git" / "hooks"
 hook_file = hooks_path / "pre-commit"
 
 if not hooks_path.exists():
-    console.print(f"[error].git/hooks folder not found in {target_dir}. Are you sure you're in a Git project?[/error]")
+    print(f"[error].git/hooks folder not found in {target_dir}. Are you sure you're in a Git project?[/error]")
     sys.exit(1)
 
 user_lang = sys.argv[1] if len(sys.argv) > 1 else "English"
@@ -48,4 +48,4 @@ exit $RESULT
 
 hook_file.write_text(bash_template, encoding="utf-8")
 hook_file.chmod(0o755)
-console.print("[success]Git Hook successfully installed in .git/hooks/pre-commit[/success]")
+print("[success]Git Hook successfully installed in .git/hooks/pre-commit[/success]")
